@@ -192,14 +192,6 @@ namespace ZedUnity.Editor
 
             var projectRoot = Directory.GetParent(Application.dataPath).FullName;
             EditorGUILayout.LabelField("Project Root", projectRoot, EditorStyles.miniLabel);
-
-            EditorGUILayout.Space(4);
-
-            EditorGUILayout.HelpBox(
-                "OmniSharp language server configuration is written to .zed/settings.json " +
-                "in the project root on first sync.\n\n" +
-                "For debugging: install the 'unity-debug' DAP adapter and see docs/setup-guide.md.",
-                MessageType.Info);
         }
 
         // -----------------------------------------------------------------------

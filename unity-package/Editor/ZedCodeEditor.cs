@@ -70,6 +70,8 @@ namespace ZedUnity.Editor
         // IExternalCodeEditor – Lifecycle
         // -----------------------------------------------------------------------
 
+        private const string k_NullablePrefKey = "ZedUnity.NullableEnabled";
+
         private string _editorPath;
         private ProjectGeneration.ProjectGeneration _projectGeneration;
 
@@ -124,6 +126,7 @@ namespace ZedUnity.Editor
         public void SyncAll()
         {
             EnsureProjectGeneration();
+            _projectGeneration.NullableEnabled = EditorPrefs.GetBool(k_NullablePrefKey, false);
             _projectGeneration.GenerateAll();
             AssetDatabase.Refresh();
         }
@@ -150,7 +153,10 @@ namespace ZedUnity.Editor
                 f.EndsWith(".asmref", StringComparison.OrdinalIgnoreCase));
 
             if (needsSync)
+            {
+                _projectGeneration.NullableEnabled = EditorPrefs.GetBool(k_NullablePrefKey, false);
                 _projectGeneration.GenerateAll();
+            }
         }
 
         // -----------------------------------------------------------------------
@@ -168,6 +174,17 @@ namespace ZedUnity.Editor
                 EditorGUILayout.LabelField("Project Files", GUILayout.Width(120));
                 if (GUILayout.Button("Regenerate .csproj / .sln", GUILayout.Width(200)))
                     SyncAll();
+            }
+
+            EditorGUILayout.Space(4);
+
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                EditorGUILayout.LabelField("Enable Nullable", GUILayout.Width(120));
+                var current = EditorPrefs.GetBool(k_NullablePrefKey, false);
+                var updated = EditorGUILayout.Toggle(current, GUILayout.Width(20));
+                if (updated != current)
+                    EditorPrefs.SetBool(k_NullablePrefKey, updated);
             }
 
             EditorGUILayout.Space(4);

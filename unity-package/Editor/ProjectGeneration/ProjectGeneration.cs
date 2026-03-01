@@ -37,6 +37,8 @@ namespace ZedUnity.Editor.ProjectGeneration
         private readonly string _projectDirectory;
         private readonly string _assetsDirectory;
 
+        public bool NullableEnabled { get; set; } = false;
+
         // -----------------------------------------------------------------------
         // Constructor
         // -----------------------------------------------------------------------
@@ -100,7 +102,8 @@ namespace ZedUnity.Editor.ProjectGeneration
             sb.AppendLine("    <BaseIntermediateOutputPath>Temp\\obj\\</BaseIntermediateOutputPath>");
             sb.AppendLine("    <BaseOutputPath>Temp\\bin\\</BaseOutputPath>");
             sb.AppendLine("    <Deterministic>true</Deterministic>");
-            sb.AppendLine("    <Nullable>enable</Nullable>");
+            if (NullableEnabled)
+                sb.AppendLine("    <Nullable>enable</Nullable>");
 
             var defines = string.Join(";", assembly.defines.Select(d => SecurityElement.Escape(d)));
             sb.AppendLine($"    <DefineConstants>{defines}</DefineConstants>");

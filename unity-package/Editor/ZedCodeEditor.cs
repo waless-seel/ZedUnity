@@ -171,21 +171,22 @@ namespace ZedUnity.Editor
 
             using (new EditorGUILayout.HorizontalScope())
             {
-                EditorGUILayout.LabelField("Project Files", GUILayout.Width(120));
-                if (GUILayout.Button("Regenerate .csproj / .sln", GUILayout.Width(200)))
-                    SyncAll();
-            }
-
-            EditorGUILayout.Space(4);
-
-            using (new EditorGUILayout.HorizontalScope())
-            {
                 EditorGUILayout.LabelField("Enable Nullable", GUILayout.Width(120));
                 var current = EditorPrefs.GetBool(k_NullablePrefKey, false);
                 var updated = EditorGUILayout.Toggle(current, GUILayout.Width(20));
                 if (updated != current)
                     EditorPrefs.SetBool(k_NullablePrefKey, updated);
             }
+
+            EditorGUILayout.Space(4);
+
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                EditorGUILayout.LabelField("Project Files", GUILayout.Width(120));
+                if (GUILayout.Button("Regenerate .csproj / .sln", GUILayout.Width(200)))
+                    SyncAll();
+            }
+
 
             EditorGUILayout.Space(4);
 

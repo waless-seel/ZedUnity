@@ -232,7 +232,7 @@ namespace ZedUnity.Editor.ProjectGeneration
   }
 }
 ";
-            File.WriteAllText(settingsPath, json, Encoding.UTF8);
+            File.WriteAllText(settingsPath, json, new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
         }
 
         // -----------------------------------------------------------------------

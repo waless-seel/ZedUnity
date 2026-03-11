@@ -86,12 +86,33 @@ namespace ZedUnity.Editor
         // IExternalCodeEditor – Open
         // -----------------------------------------------------------------------
 
+        // Extensions that Zed should open (code/text files only).
+        // Unity scene/asset files (.unity, .prefab, .mat, etc.) are intentionally excluded
+        // so Unity opens them natively instead of sending them to Zed.
+        private static readonly HashSet<string> s_SupportedExtensions = new HashSet<string>(
+            StringComparer.OrdinalIgnoreCase)
+        {
+            ".cs", ".shader", ".cginc", ".hlsl", ".glsl", ".compute",
+            ".asmdef", ".asmref",
+            ".json", ".xml", ".txt", ".md", ".yaml", ".yml",
+            ".js", ".ts", ".py", ".lua",
+        };
+
         /// <summary>
         /// Opens the Unity project (or a specific file) in Zed.
-        /// Returns false if Zed could not be launched.
+        /// Returns false if Zed could not be launched or the file type is not supported.
         /// </summary>
         public bool OpenProject(string filePath = "", int line = -1, int column = -1)
         {
+            // Reject non-code files (e.g. .unity scenes, .prefab, .mat) so Unity
+            // opens them natively rather than passing them to Zed.
+            if (!string.IsNullOrEmpty(filePath))
+            {
+                var ext = Path.GetExtension(filePath);
+                if (!string.IsNullOrEmpty(ext) && !s_SupportedExtensions.Contains(ext))
+                    return false;
+            }
+
             var editorPath = ResolveEditorPath();
             if (string.IsNullOrEmpty(editorPath))
             {

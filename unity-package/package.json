@@ -1,8 +1,8 @@
 {
   "name": "com.zedunity.ide.zed",
-  "version": "0.1.5",
+  "version": "0.1.4",
   "displayName": "Zed Editor",
-  "description": "Zed Editor integration for Unity - enables Zed as the external script editor with full IntelliSense support via Roslyn.",
+  "description": "Zed Editor integration for Unity - enables Zed as the external script editor with full IntelliSense support via OmniSharp.",
   "unity": "2020.3",
   "keywords": [
     "zed",

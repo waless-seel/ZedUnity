@@ -253,11 +253,14 @@ namespace ZedUnity.Editor
         {
             try
             {
+                // UseShellExecute = false to directly exec the binary.
+                // On macOS, UseShellExecute = true routes through the `open` command
+                // which does not forward CLI arguments to the target process.
                 var psi = new ProcessStartInfo
                 {
                     FileName = executable,
                     Arguments = args,
-                    UseShellExecute = true,
+                    UseShellExecute = false,
                 };
                 Process.Start(psi);
                 return true;

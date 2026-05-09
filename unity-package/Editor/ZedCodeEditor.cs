@@ -121,19 +121,25 @@ namespace ZedUnity.Editor
                 return false;
             }
 
+            var projectRoot = Directory.GetParent(Application.dataPath).FullName;
+
             string args;
             if (string.IsNullOrEmpty(filePath))
             {
                 // Open project root as a workspace
-                var projectRoot = Directory.GetParent(Application.dataPath).FullName;
                 args = ZedDiscovery.BuildOpenProjectArgs(projectRoot);
             }
             else
             {
+                // Unity can pass a relative path (e.g. "Assets/Scripts/Foo.cs") for
+                // compile-error console clicks.  Convert it to an absolute path so Zed
+                // can locate the file regardless of its working directory.
+                if (!Path.IsPathRooted(filePath))
+                    filePath = Path.GetFullPath(Path.Combine(projectRoot, filePath));
+
                 args = ZedDiscovery.BuildOpenFileArgs(filePath, line, column);
 
                 // Also pass the project root so Zed opens the file in the right workspace
-                var projectRoot = Directory.GetParent(Application.dataPath).FullName;
                 args = $"{ZedDiscovery.BuildOpenProjectArgs(projectRoot)} {args}";
             }
 

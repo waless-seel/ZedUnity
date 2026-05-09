@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.5] - 2026-05-09
+
+### Fixed
+- Console double-click now correctly jumps to the error line in Zed. Unity can pass a relative path (e.g. `Assets/Scripts/Foo.cs`) for compile-error clicks; this is now resolved to an absolute path before being sent to Zed.
+- CLI argument quoting updated to always wrap paths in double-quotes, preventing issues with special characters in paths.
+
 ## [0.1.3] - 2026-03-02
 
 ### Added

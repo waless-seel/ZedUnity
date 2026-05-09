@@ -61,8 +61,7 @@ namespace ZedUnity.Editor
 
         private static string Quote(string value)
         {
-            // Wrap in double quotes if the path contains spaces
-            return value.Contains(" ") ? $"\"{value}\"" : value;
+            return $"\"{value.Replace("\"", "\\\"")}\"";
         }
 
 #if UNITY_EDITOR_WIN

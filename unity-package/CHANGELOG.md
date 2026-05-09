@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.6] - 2026-05-09
+
+### Fixed
+- Console double-click now launches Zed with the correct file and line. On macOS, `UseShellExecute = true` internally uses the `open` command, which does not forward CLI arguments to the target process. Switching to `UseShellExecute = false` directly exec's the Zed binary so all arguments are delivered correctly.
+
 ## [0.1.5] - 2026-05-09
 
 ### Fixed
